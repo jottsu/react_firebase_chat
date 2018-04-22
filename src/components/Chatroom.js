@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
-import './chatroom.css';
+import './chatroom.css'
+import { firebaseDb } from '../firebaseConfig'
+
+const messagesRef = firebaseDb.ref().child('messages')
 
 export default class Chatroom extends Component {
   constructor (props) {
@@ -8,6 +11,17 @@ export default class Chatroom extends Component {
       formText: '',
       messages: []
     }
+  }
+
+  componentWillMount () {
+    messagesRef.on('child_added', snap => {
+      const message = snap.val()
+      const messages = this.state.messages
+      messages.unshift(message)
+      this.setState({
+        messages: messages
+      })
+    })
   }
 
   changeFormText (e) {
@@ -21,13 +35,11 @@ export default class Chatroom extends Component {
     if (formText === '') {
       return
     }
-    const messages = this.state.messages
-    messages.push({
-      text: formText
+    messagesRef.push({
+      text: formText,
     })
     this.setState({
-      formText: '',
-      messages: messages
+      formText: ''
     })
   }
 
