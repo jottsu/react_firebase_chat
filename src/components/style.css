@@ -1,0 +1,99 @@
+* {
+  box-sizing: border-box;
+}
+
+/* common */
+.btn {
+  display: inline-block;
+  background-color: #1e90ff;
+  color: #fff;
+  font-size: 14px;
+  line-height: 28px;
+  padding: 0 10px;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
+}
+
+.btn.btn-inverse {
+  background-color: #fff;
+  color: #1e90ff;
+}
+
+/* chatroom */
+
+.message-form-container {
+  background-color: #f0f8ff;
+  border-bottom: 1px solid #ddd;
+  padding: 20px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+.message-form {
+  max-width: 600px;
+  margin: 0 auto;
+  display: -webkit-flex;
+  display: flex;
+}
+
+.message-form input {
+  height: 28px;
+  padding: 2px 4px;
+  width: -webkit-calc(100% - 58px);
+  width: calc(100% - 58px);
+  margin-right: 10px;
+}
+
+.message-list-container {
+  margin-top: 69px;
+  padding: 10px 20px;
+}
+
+.message-list {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.message-container {
+  padding: 5px 0;
+}
+
+.message {
+  display: inline-block;
+  background-color: #eee;
+  max-width: 80%;
+  padding: 4px 16px;
+  border-radius: 16px;
+}
+
+/* authform */
+
+.auth-form {
+  width: 80%;
+  max-width: 500px;
+  margin: 0 auto;
+  background-color: #f0f8ff;
+  border: 1px solid #ddd;
+  text-align: center;
+  margin-top: 100px;
+  padding: 0 0 10px;
+}
+
+.auth-form h2 {
+  font-weight: normal;
+  color: #444;
+  margin: 20px 0;
+}
+
+.auth-form .form-item {
+  margin-bottom: 16px;
+}
+
+.auth-form input {
+  height: 28px;
+  padding: 2px 4px;
+  width: 80%;
+  max-width: 300px;
+}

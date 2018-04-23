@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
-import './chatroom.css'
+import './style.css'
 import { firebaseDb } from '../firebaseConfig'
 
 const messagesRef = firebaseDb.ref().child('messages')
 
-export default class Chatroom extends Component {
+export default class ChatRoom extends Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -36,7 +36,7 @@ export default class Chatroom extends Component {
       return
     }
     messagesRef.push({
-      text: formText,
+      text: formText
     })
     this.setState({
       formText: ''
@@ -54,13 +54,14 @@ export default class Chatroom extends Component {
 
     return (
       <div>
-        <div className='form-container'>
-          <div className='form'>
+        <div className='message-form-container'>
+          <div className='message-form'>
             <input
               value={this.state.formText}
               onChange={e => this.changeFormText(e)}
             />
             <span
+              className='btn'
               onClick={() => this.submitMessage()}
             >
               送信
