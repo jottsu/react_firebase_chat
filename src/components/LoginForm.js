@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
+import { withRouter } from 'react-router-dom'
+import { firebaseAuth } from '../firebaseConfig'
 
-export default class LoginForm extends Component {
+class LoginForm extends Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -22,7 +24,14 @@ export default class LoginForm extends Component {
   }
 
   login () {
-
+    firebaseAuth.signInWithEmailAndPassword(this.state.email, this.state.password)
+    .then(user => {
+      this.props.setUser(user)
+      this.props.history.push('/')
+    })
+    .catch(err => {
+      alert(err)
+    })
   }
 
   render () {
@@ -61,3 +70,5 @@ export default class LoginForm extends Component {
     )
   }
 }
+
+export default withRouter(LoginForm)
