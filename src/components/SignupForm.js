@@ -1,13 +1,21 @@
 import React, { Component } from 'react'
+import { withRouter } from 'react-router-dom'
 import { firebaseAuth } from '../firebaseConfig'
 
-export default class SignupForm extends Component {
+class SignupForm extends Component {
   constructor (props) {
     super(props)
     this.state = {
+      name: '',
       email: '',
       password: ''
     }
+  }
+
+  changeName (e) {
+    this.setState({
+      name: e.target.value
+    })
   }
 
   changeEmail (e) {
@@ -23,18 +31,37 @@ export default class SignupForm extends Component {
   }
 
   signup () {
+    const name = this.state.name.trim()
     const email = this.state.email.trim()
     const password = this.state.password.trim()
-    if (email === '' || password === '') {
+    if (name === '' || email === '' || password === '') {
       return
     }
     firebaseAuth.createUserWithEmailAndPassword(email, password)
+    .then(user => {
+      return user.updateProfile({
+        displayName: name
+      }).then(() => {
+        this.props.setUser(firebaseAuth.currentUser)
+        this.props.history.push('/')
+      })
+    })
+    .catch(err => {
+      alert(err)
+    })
   }
 
   render () {
     return (
       <div className='auth-form'>
         <h2>新規登録</h2>
+        <div className='form-item'>
+          <input
+            value={this.state.name}
+            placeholder='ユーザー名'
+            onChange={(e) => this.changeName(e)}
+          />
+        </div>
         <div className='form-item'>
           <input
             value={this.state.email}
@@ -67,3 +94,5 @@ export default class SignupForm extends Component {
     )
   }
 }
+
+export default withRouter(SignupForm)
