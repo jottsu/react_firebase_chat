@@ -39,10 +39,10 @@ class Header extends Component {
       <div className='header-menu'>
         <ul>
           <li>
-            ユーザー設定
+            <a href='/setting'>ユーザー設定</a>
           </li>
-          <li onClick={() => this.logout()} >
-            ログアウト
+          <li>
+            <span onClick={() => this.logout()}>ログアウト</span>
           </li>
         </ul>
       </div>

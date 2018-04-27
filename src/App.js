@@ -6,6 +6,7 @@ import {
   Redirect
 } from 'react-router-dom'
 import ChatRoom from './components/ChatRoom'
+import SettingForm from './components/SettingForm'
 import LoginForm from './components/LoginForm'
 import SignupForm from './components/SignupForm'
 import Header from './components/Header'
@@ -39,6 +40,7 @@ class App extends Component {
     const authRoutes = (
       <Switch>
         <Route exact path='/' render={() => <ChatRoom currentUser={currentUser} />} />
+        <Route path='/setting' render={() => <SettingForm currentUser={currentUser} />} />
         <Redirect from="/login" to="/" />
         <Redirect from="/signup" to="/" />
       </Switch>
@@ -47,6 +49,7 @@ class App extends Component {
     const unAuthRoutes = (
       <Switch>
         <Redirect exact from="/" to="/login" />
+        <Redirect from="/setting" to="/login" />
         <Route path='/login' render={() => <LoginForm setUser={(user) => this.setUser(user)} />} />
         <Route path='/signup' render={() => <SignupForm setUser={(user) => this.setUser(user)} />} />
       </Switch>
