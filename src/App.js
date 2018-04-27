@@ -38,7 +38,7 @@ class App extends Component {
 
     const authRoutes = (
       <Switch>
-        <Route exact path='/' component={ChatRoom} user={currentUser} />
+        <Route exact path='/' render={() => <ChatRoom currentUser={currentUser} />} />
         <Redirect from="/login" to="/" />
         <Redirect from="/signup" to="/" />
       </Switch>

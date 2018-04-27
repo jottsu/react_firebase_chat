@@ -65,12 +65,21 @@ header {
   padding: 5px 0;
 }
 
+.my-message {
+  text-align: right;
+}
+
 .message {
   display: inline-block;
   background-color: #eee;
   max-width: 80%;
   padding: 4px 16px;
   border-radius: 16px;
+}
+
+.my-message .message {
+  background-color: #1e90ff;
+  color: #fff;
 }
 
 /* authform */

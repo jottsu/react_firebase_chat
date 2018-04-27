@@ -16,10 +16,13 @@ export default class ChatRoom extends Component {
   componentWillMount () {
     messagesRef.on('child_added', snap => {
       const message = snap.val()
-      const messages = this.state.messages
-      messages.unshift(message)
-      this.setState({
-        messages: messages
+      firebaseDb.ref('users/' + message.userUid).on('value', snap => {
+        message.userName = snap.val().displayName
+        const messages = this.state.messages
+        messages.unshift(message)
+        this.setState({
+          messages: messages
+        })
       })
     })
   }
@@ -36,7 +39,8 @@ export default class ChatRoom extends Component {
       return
     }
     messagesRef.push({
-      text: formText
+      text: formText,
+      userUid: this.props.currentUser.uid
     })
     this.setState({
       formText: ''
@@ -44,8 +48,16 @@ export default class ChatRoom extends Component {
   }
 
   render () {
+    const myMessageClassName = (message) => {
+      if (message.userUid === this.props.currentUser.uid) {
+        return ' my-message'
+      }
+      return ''
+    }
+
     const messageList = this.state.messages.map((message, i) => (
-      <div key={i} className='message-container'>
+      <div key={i} className={'message-container' + myMessageClassName(message)}>
+        <div>{message.userName}</div>
         <div className='message'>
           {message.text}
         </div>

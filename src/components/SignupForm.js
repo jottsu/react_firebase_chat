@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
-import { firebaseAuth } from '../firebaseConfig'
+import { firebaseDb, firebaseAuth } from '../firebaseConfig'
 
 class SignupForm extends Component {
   constructor (props) {
@@ -39,10 +39,15 @@ class SignupForm extends Component {
     }
     firebaseAuth.createUserWithEmailAndPassword(email, password)
     .then(user => {
-      return user.updateProfile({
+      user.updateProfile({
         displayName: name
       }).then(() => {
-        this.props.setUser(firebaseAuth.currentUser)
+        const user = firebaseAuth.currentUser
+        firebaseDb.ref('users/' + user.uid).set({
+          displayName: user.displayName,
+          email: user.email
+        })
+        this.props.setUser(user)
         this.props.history.push('/')
       })
     })
