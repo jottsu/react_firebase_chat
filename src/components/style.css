@@ -2,6 +2,19 @@
   box-sizing: border-box;
 }
 
+a {
+  text-decoration: none;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+ul li {
+  list-style: none;
+}
+
 /* common */
 .btn {
   display: inline-block;
@@ -23,6 +36,56 @@
 /* header */
 header {
   z-index: 10;
+  height: 44px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, .16);
+  text-align: center;
+}
+
+header .icon {
+  color: #1e90ff;
+  font-size: 20px;
+  line-height: 44px;
+}
+
+.header-btn {
+  position: absolute;
+  top: 0;
+  right: 10px;
+  height: 44px;
+  padding: 0 20px;
+  cursor: pointer;
+}
+
+.header-btn:hover {
+  background-color: #eee;
+}
+
+.header-btn .user-name {
+  line-height: 44px;
+}
+
+.header-menu {
+  position: absolute;
+  top: 44px;
+  right: 0;
+  width: 160px;
+  background-color: #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, .16);
+}
+
+.header-menu ul li {
+  text-align: center;
+  padding: 6px 0;
+  cursor: pointer;
+}
+
+.header-menu ul li:hover {
+  background-color: #eee;
 }
 
 /* chatroom */
@@ -30,9 +93,9 @@ header {
 .message-form-container {
   background-color: #f0f8ff;
   border-bottom: 1px solid #ddd;
-  padding: 20px;
+  padding: 25px 0 20px;
   position: fixed;
-  top: 28px;
+  top: 44px;
   width: 100%;
 }
 
@@ -52,7 +115,7 @@ header {
 }
 
 .message-list-container {
-  margin-top: 69px;
+  margin-top: 74px;
   padding: 10px 20px;
 }
 

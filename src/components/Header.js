@@ -3,7 +3,20 @@ import { withRouter } from 'react-router-dom'
 import { firebaseAuth } from '../firebaseConfig'
 
 class Header extends Component {
-  logout() {
+  constructor (props) {
+    super(props)
+    this.state = {
+      menuOpen: false
+    }
+  }
+
+  changeMenuStatus () {
+    this.setState({
+      menuOpen: !this.state.menuOpen
+    })
+  }
+
+  logout () {
     firebaseAuth.signOut()
     .then(() => {
       const user = {
@@ -21,22 +34,42 @@ class Header extends Component {
 
   render() {
     const currentUser = this.props.user
-    const content = (currentUser.uid === '') ? (
+
+    const headerMenu = this.state.menuOpen ? (
+      <div className='header-menu'>
+        <ul>
+          <li>
+            ユーザー設定
+          </li>
+          <li onClick={() => this.logout()} >
+            ログアウト
+          </li>
+        </ul>
+      </div>
+    ) : (
+      <div></div>
+    )
+
+    const headerBtn = (currentUser.uid === '') ? (
       <div></div>
     ) : (
       <div>
-        <span
-          className='btn'
-          onClick={() => this.logout()}
+        <div
+          className='header-btn'
+          onClick={() => this.changeMenuStatus()}
         >
-          ログアウト
-        </span>
-        <span>{currentUser.email}でログインしています</span>
+          <span className="user-name" >
+            {currentUser.displayName}
+          </span>
+        </div>
+        {headerMenu}
       </div>
     )
+
     return (
       <header>
-        {content}
+        <a href='/' className='icon'>Chat</a>
+        {headerBtn}
       </header>
     )
   }
