@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import { firebaseAuth } from '../firebaseConfig'
+import defaultUserImg from '../images/default_user_img.png'
 
 class Header extends Component {
   constructor (props) {
@@ -58,9 +59,10 @@ class Header extends Component {
           className='header-btn'
           onClick={() => this.changeMenuStatus()}
         >
-          <span className="user-name" >
+          <img src={defaultUserImg} alt='user' className='user-img' />
+          <div className="user-name" >
             {currentUser.displayName}
-          </span>
+          </div>
         </div>
         {headerMenu}
       </div>

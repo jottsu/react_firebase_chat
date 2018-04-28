@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import './style.css'
 import { firebaseDb } from '../firebaseConfig'
+import defaultUserImg from '../images/default_user_img.png'
 
 const messagesRef = firebaseDb.ref().child('messages')
 
@@ -57,9 +58,18 @@ export default class ChatRoom extends Component {
 
     const messageList = this.state.messages.map((message, i) => (
       <div key={i} className={'message-container' + myMessageClassName(message)}>
-        <div>{message.userName}</div>
-        <div className='message'>
-          {message.text}
+        <div className='message-item clearfix'>
+          <div className='message-img-container'>
+            <img src={defaultUserImg} alt='user' className='user-img' />
+          </div>
+          <div className='message-text-container'>
+            <div className='message-user-name'>
+              {message.userName}
+            </div>
+            <div className='message-text'>
+              {message.text}
+            </div>
+          </div>
         </div>
       </div>
     ))

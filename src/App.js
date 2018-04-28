@@ -16,9 +16,9 @@ class App extends Component {
     super(props)
     this.state = {
       currentUser: {
-        uid: '',
-        displayName: '',
-        email: ''
+        uid: 'XhgMkBUOfITx6HHR5Saclut05LX2',
+        displayName: 'user1',
+        email: 'user1@sample.com'
       }
     }
   }
