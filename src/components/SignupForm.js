@@ -40,12 +40,14 @@ class SignupForm extends Component {
     firebaseAuth.createUserWithEmailAndPassword(email, password)
     .then(user => {
       user.updateProfile({
-        displayName: name
+        displayName: name,
+        photoURL: ''
       }).then(() => {
         const user = firebaseAuth.currentUser
         firebaseDb.ref('users/' + user.uid).set({
           displayName: user.displayName,
-          email: user.email
+          email: user.email,
+          photoURL: ''
         })
         this.props.setUser(user)
         this.props.history.push('/')

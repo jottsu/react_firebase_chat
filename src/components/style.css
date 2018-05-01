@@ -15,6 +15,10 @@ ul li {
   list-style: none;
 }
 
+img {
+  object-fit: cover;
+}
+
 /* common */
 .clearfix:after {
   display: block;
@@ -265,4 +269,16 @@ header .icon {
   padding: 2px 4px;
   width: 80%;
   max-width: 300px;
+}
+
+.auth-form input[type='file'] {
+  display: none;
+}
+
+.form-user-img {
+  height: 100px;
+  width: 100px;
+  border-radius: 50%;
+  display: block;
+  margin: 0 auto 5px;
 }

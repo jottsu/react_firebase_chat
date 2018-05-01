@@ -24,12 +24,9 @@ class LoginForm extends Component {
   }
 
   login () {
-    firebaseAuth.signInWithEmailAndPassword(this.state.email, this.state.password)
-    .then(user => {
-      this.props.setUser(user)
+    firebaseAuth.signInWithEmailAndPassword(this.state.email, this.state.password).then(() => {
       this.props.history.push('/')
-    })
-    .catch(err => {
+    }).catch(err => {
       alert(err)
     })
   }

@@ -18,16 +18,7 @@ class Header extends Component {
   }
 
   logout () {
-    firebaseAuth.signOut()
-    .then(() => {
-      const user = {
-        uid: '',
-        displayName: '',
-        email: ''
-      }
-      this.props.setUser(user)
-    })
-    .catch(err => {
+    firebaseAuth.signOut().catch(err => {
       alert(err)
     })
     this.props.history.push('/login')

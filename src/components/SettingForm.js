@@ -1,15 +1,32 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
-// import { firebaseDb, firebaseAuth } from '../firebaseConfig'
+import { firebaseDb, firebaseAuth, firebaseSt } from '../firebaseConfig'
+import defaultUserImg from '../images/default_user_img.png'
 
-class SignupForm extends Component {
+class SettingForm extends Component {
   constructor (props) {
     super(props)
     this.state = {
+      image: this.props.currentUser.photoUrl,
       name: this.props.currentUser.displayName,
       email: this.props.currentUser.email,
-      password: ''
     }
+  }
+
+  changeImage (e) {
+    const file = e.target.files[0]
+    if (!file) {
+      return
+    }
+    const fr = new FileReader()
+    fr.onload = () => {
+      const imgNode = this.refs.image
+      imgNode.src = fr.result
+    }
+    fr.readAsDataURL(file)
+    this.setState({
+      image: file
+    })
   }
 
   changeName (e) {
@@ -24,25 +41,49 @@ class SignupForm extends Component {
     })
   }
 
-  changePassword (e) {
-    this.setState({
-      password: e.target.value
-    })
-  }
-
   updateUser () {
     const name = this.state.name.trim()
     const email = this.state.email.trim()
-    const password = this.state.password.trim()
-    if (name === '' || email === '' || password === '') {
+    const image = this.state.image
+    if (name === '' || email === '' || image === '') {
       return
     }
+
+    const user = firebaseAuth.currentUser
+    const imgRef = firebaseSt.ref('user_images/' + user.uid + '/user_image.jpg')
+    imgRef.put(image).then(() => {
+      return imgRef.getDownloadURL()
+    }).then((imgURL) => {
+      user.updateProfile({
+        displayName: name,
+        email: email,
+        photoURL: imgURL
+      })
+      firebaseDb.ref('users/' + user.uid).set({
+        displayName: name,
+        email: email,
+        photoURL: imgURL
+      })
+    })
   }
 
   render () {
+    const userImgSrc = (this.state.image !== '') ? this.state.image : defaultUserImg
+
     return (
       <div className='auth-form'>
         <h2>ユーザー設定</h2>
+        <div className='form-item'>
+          <img ref="image" src={userImgSrc} alt='user' className='form-user-img' />
+          <label htmlFor='img-file' className='btn btn-inverse'>
+            画像を選択
+            <input
+              type='file'
+              id='img-file'
+              onChange={(e) => this.changeImage(e)}
+            />
+          </label>
+        </div>
         <div className='form-item'>
           <input
             value={this.state.name}
@@ -58,14 +99,6 @@ class SignupForm extends Component {
           />
         </div>
         <div className='form-item'>
-          <input
-            type='password'
-            value={this.state.password}
-            placeholder='パスワード'
-            onChange={(e) => this.changePassword(e)}
-          />
-        </div>
-        <div className='form-item'>
           <span
             className='btn'
             onClick={() => this.updateUser()}
@@ -78,4 +111,4 @@ class SignupForm extends Component {
   }
 }
 
-export default withRouter(SignupForm)
+export default withRouter(SettingForm)
