@@ -72,7 +72,7 @@ class App extends Component {
     const authRoutes = (
       <Switch>
         <Route exact path='/' render={() => <ChatRoom currentUser={currentUser} />} />
-        <Route path='/setting' render={() => <SettingForm currentUser={currentUser} />} />
+        <Route path='/setting' render={() => <SettingForm currentUser={currentUser} setUser={(user) => this.setUser(user)} />} />
         <Redirect from="/login" to="/" />
         <Redirect from="/signup" to="/" />
       </Switch>
@@ -90,7 +90,7 @@ class App extends Component {
     if (!this.state.isLoaded) {
       return (
         <Router>
-          <Header user={currentUser} setUser={(user) => this.setUser(user)} />
+          <Header currentUser={currentUser} setUser={(user) => this.setUser(user)} />
         </Router>
       )
     }
@@ -98,7 +98,7 @@ class App extends Component {
     return (
       <Router>
         <div>
-          <Header user={currentUser} setUser={(user) => this.setUser(user)} />
+          <Header currentUser={currentUser} setUser={(user) => this.setUser(user)} />
           {currentUser.uid === '' ? unAuthRoutes : authRoutes}
         </div>
       </Router>

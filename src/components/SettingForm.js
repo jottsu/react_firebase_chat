@@ -7,9 +7,9 @@ class SettingForm extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      image: this.props.currentUser.photoUrl,
       name: this.props.currentUser.displayName,
       email: this.props.currentUser.email,
+      image: this.props.currentUser.photoURL
     }
   }
 
@@ -54,21 +54,27 @@ class SettingForm extends Component {
     imgRef.put(image).then(() => {
       return imgRef.getDownloadURL()
     }).then((imgURL) => {
-      user.updateProfile({
-        displayName: name,
-        email: email,
-        photoURL: imgURL
-      })
       firebaseDb.ref('users/' + user.uid).set({
         displayName: name,
         email: email,
         photoURL: imgURL
       })
+      user.updateProfile({
+        displayName: name,
+        email: email,
+        photoURL: imgURL
+      }).then(() => {
+        this.props.setUser(firebaseAuth.currentUser)
+        this.props.history.push('/')
+      })
+    }).catch(err => {
+      alert(err)
     })
   }
 
   render () {
-    const userImgSrc = (this.state.image !== '') ? this.state.image : defaultUserImg
+    const imageURL = this.state.image
+    const userImgSrc = (imageURL === undefined || imageURL === '' || imageURL === null) ? defaultUserImg : imageURL
 
     return (
       <div className='auth-form'>

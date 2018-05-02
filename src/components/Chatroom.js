@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import './style.css'
 import { firebaseDb } from '../firebaseConfig'
-import defaultUserImg from '../images/default_user_img.png'
+import UserImage from './UserImage'
 
 const messagesRef = firebaseDb.ref().child('messages')
 
@@ -18,7 +18,9 @@ export default class ChatRoom extends Component {
     messagesRef.on('child_added', snap => {
       const message = snap.val()
       firebaseDb.ref('users/' + message.userUid).on('value', snap => {
-        message.userName = snap.val().displayName
+        const val = snap.val()
+        message.userName = val.displayName
+        message.userImage = val.photoURL
         const messages = this.state.messages
         messages.unshift(message)
         this.setState({
@@ -60,7 +62,7 @@ export default class ChatRoom extends Component {
       <div key={i} className={'message-container' + myMessageClassName(message)}>
         <div className='message-item clearfix'>
           <div className='message-img-container'>
-            <img src={defaultUserImg} alt='user' className='user-img' />
+            <UserImage imageURL={message.userImage} />
           </div>
           <div className='message-text-container'>
             <div className='message-user-name'>
