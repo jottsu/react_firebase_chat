@@ -21,6 +21,7 @@ class Header extends Component {
     firebaseAuth.signOut().catch(err => {
       alert(err)
     })
+    this.changeMenuStatus()
     this.props.history.push('/login')
   }
 
