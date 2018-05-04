@@ -22,7 +22,7 @@ export default class ChatRoom extends Component {
         roomTitle: snap.val().title
       })
     })
-    messagesRef.orderByChild('room').startAt(room).endAt(room).on('child_added', snap => {
+    messagesRef.orderByChild('room').equalTo(room).on('child_added', snap => {
       const message = snap.val()
       firebaseDb.ref('users/' + message.userUid).on('value', snap => {
         const val = snap.val()
@@ -30,6 +30,11 @@ export default class ChatRoom extends Component {
         message.userImage = val.photoURL
         const messages = this.state.messages
         messages.unshift(message)
+        messages.sort((m1, m2) => {
+          if (m1.timestamp < m2.timestamp) return 1
+          if (m1.timestamp > m2.timestamp) return -1
+          return 0
+        })
         this.setState({
           messages: messages
         })
@@ -51,7 +56,8 @@ export default class ChatRoom extends Component {
     messagesRef.push({
       text: formText,
       room: this.props.match.params.room,
-      userUid: this.props.currentUser.uid
+      userUid: this.props.currentUser.uid,
+      timestamp: Date.now()
     })
     this.setState({
       formText: ''
