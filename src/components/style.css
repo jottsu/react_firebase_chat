@@ -126,11 +126,28 @@ header .icon {
   z-index: 5;
 }
 
-.exit-btn-container {
+.form-top-container {
   max-width: 600px;
   margin: 0 auto;
   position: relative;
   top: -12px;
+}
+
+.form-top-container .btn {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.form-top-title {
+  width: -webkit-calc(100% - 140px);
+  width: calc(100% - 140px);
+  margin: 0 auto;
+  font-size: 18px;
+  line-height: 28px;
+  height: 28px;
+  text-align: center;
+  overflow: hidden;
 }
 
 .message-form {
@@ -293,7 +310,7 @@ header .icon {
 /* roomlist */
 
 .room-list-container {
-  margin-top: 74px;
+  margin-top: 102px;
 }
 
 .room-item {
@@ -302,6 +319,11 @@ header .icon {
   margin: 0 auto;
   padding: 20px;
   position: relative;
+}
+
+.room-title {
+  width: -webkit-calc(100% - 60px);
+  width: calc(100% - 60px);
 }
 
 .room-enter-btn {

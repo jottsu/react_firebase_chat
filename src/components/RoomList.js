@@ -48,7 +48,7 @@ export default class ChatRoom extends Component {
   render () {
     const roomList = this.state.rooms.map((room, i) => (
       <div key={i} className='room-item'>
-        <div>{room.title}</div>
+        <div className='room-title'>{room.title}</div>
         <a href={'/chatroom/' + room.key} className='btn room-enter-btn'>入室</a>
       </div>
     ))
@@ -56,6 +56,9 @@ export default class ChatRoom extends Component {
     return (
       <div>
         <div className='message-form-container'>
+          <div className='form-top-container'>
+            <div className='form-top-title'>チャットルーム一覧</div>
+          </div>
           <div className='message-form'>
             <input
               value={this.state.formText}

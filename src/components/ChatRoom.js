@@ -9,6 +9,7 @@ export default class ChatRoom extends Component {
   constructor (props) {
     super(props)
     this.state = {
+      roomTitle: '',
       formText: '',
       messages: []
     }
@@ -16,6 +17,11 @@ export default class ChatRoom extends Component {
 
   componentWillMount () {
     const room = this.props.match.params.room
+    firebaseDb.ref('rooms/' + room).on('value', snap => {
+      this.setState({
+        roomTitle: snap.val().title
+      })
+    })
     messagesRef.orderByChild('room').startAt(room).endAt(room).on('child_added', snap => {
       const message = snap.val()
       firebaseDb.ref('users/' + message.userUid).on('value', snap => {
@@ -81,8 +87,9 @@ export default class ChatRoom extends Component {
     return (
       <div>
         <div className='message-form-container'>
-          <div className='exit-btn-container'>
+          <div className='form-top-container'>
             <a href='/' className='btn btn-inverse'>退出</a>
+            <div className='form-top-title'>{this.state.roomTitle}</div>
           </div>
           <div className='message-form'>
             <input
