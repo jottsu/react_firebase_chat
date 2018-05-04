@@ -79,9 +79,13 @@ export default class ChatRoom extends Component {
     return (
       <div>
         <div className='message-form-container'>
+          <div className='exit-btn-container'>
+            <a href='/' className='btn btn-inverse'>退出</a>
+          </div>
           <div className='message-form'>
             <input
               value={this.state.formText}
+              placeholder='メッセージ'
               onChange={e => this.changeFormText(e)}
             />
             <span

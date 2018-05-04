@@ -126,6 +126,13 @@ header .icon {
   z-index: 5;
 }
 
+.exit-btn-container {
+  max-width: 600px;
+  margin: 0 auto;
+  position: relative;
+  top: -12px;
+}
+
 .message-form {
   max-width: 600px;
   margin: 0 auto;
@@ -142,7 +149,7 @@ header .icon {
 }
 
 .message-list-container {
-  margin-top: 74px;
+  margin-top: 102px;
   padding: 10px 20px;
 }
 
@@ -281,4 +288,24 @@ header .icon {
   border-radius: 50%;
   display: block;
   margin: 0 auto 5px;
+}
+
+/* roomlist */
+
+.room-list-container {
+  margin-top: 74px;
+}
+
+.room-item {
+  border-bottom: 1px solid #ccc;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  position: relative;
+}
+
+.room-enter-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
 }
