@@ -15,7 +15,8 @@ export default class ChatRoom extends Component {
   }
 
   componentWillMount () {
-    messagesRef.on('child_added', snap => {
+    const room = this.props.match.params.room
+    messagesRef.orderByChild('room').startAt(room).endAt(room).on('child_added', snap => {
       const message = snap.val()
       firebaseDb.ref('users/' + message.userUid).on('value', snap => {
         const val = snap.val()
@@ -43,6 +44,7 @@ export default class ChatRoom extends Component {
     }
     messagesRef.push({
       text: formText,
+      room: this.props.match.params.room,
       userUid: this.props.currentUser.uid
     })
     this.setState({

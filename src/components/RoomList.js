@@ -2,29 +2,27 @@ import React, { Component } from 'react'
 import './style.css'
 import { firebaseDb } from '../firebaseConfig'
 
+const roomsRef = firebaseDb.ref().child('rooms')
+
 export default class ChatRoom extends Component {
   constructor (props) {
     super(props)
     this.state = {
       formText: '',
-      rooms: [
-        {
-          title: 'ルーム1',
-          founder_uid: ''
-        },
-        {
-          title: 'ルーム2',
-          founder_uid: ''
-        },
-        {
-          title: 'ルーム3',
-          founder_uid: ''
-        }
-      ]
+      rooms: []
     }
   }
 
   componentWillMount () {
+    roomsRef.on('child_added', snap => {
+      const room = snap.val()
+      room.key = snap.key
+      const rooms = this.state.rooms
+      rooms.unshift(room)
+      this.setState({
+        rooms: rooms
+      })
+    })
   }
 
   changeFormText (e) {
@@ -38,15 +36,12 @@ export default class ChatRoom extends Component {
     if (formText === '') {
       return
     }
-    // roomsRef.push({
-    //   text: formText,
-    //   founderUid: this.props.currentUser.uid
-    // })
-    const rooms = this.state.rooms
-    rooms.unshift({ title: formText, founder: ''})
+    roomsRef.push({
+      title: formText,
+      founderUid: this.props.currentUser.uid
+    })
     this.setState({
-      formText: '',
-      rooms: rooms
+      formText: ''
     })
   }
 
@@ -54,7 +49,7 @@ export default class ChatRoom extends Component {
     const roomList = this.state.rooms.map((room, i) => (
       <div key={i} className='room-item'>
         <div>{room.title}</div>
-        <a href='/chatroom' className='btn room-enter-btn'>入室</a>
+        <a href={'/chatroom/' + room.key} className='btn room-enter-btn'>入室</a>
       </div>
     ))
 

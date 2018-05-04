@@ -72,8 +72,8 @@ class App extends Component {
 
     const authRoutes = (
       <Switch>
-        <Route exact path='/' render={() => <RoomList />} />
-        <Route exact path='/chatroom' render={() => <ChatRoom currentUser={currentUser} />} />
+        <Route exact path='/' render={() => <RoomList currentUser={currentUser} />} />
+        <Route exact path='/chatroom/:room' render={({match}) => <ChatRoom currentUser={currentUser} match={match} />} />
         <Route path='/setting' render={() => <SettingForm currentUser={currentUser} setUser={(user) => this.setUser(user)} />} />
         <Redirect from="/login" to="/" />
         <Redirect from="/signup" to="/" />
